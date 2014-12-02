@@ -1,0 +1,12 @@
+class contratos(osv.model):
+
+    _name="cybex.contratos"
+    _rec_name='contratos'
+
+    _columns={
+                 'contratos': fields.many2one('res.partner', "Partner", required=True, ondelete='cascade'),
+                 'partner_id2': fields.many2one('res.partner', "Partner", required=True, ondelete='cascade'),
+
+
+
+        }

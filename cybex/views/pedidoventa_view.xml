@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+        
+ 
+
+        <record id="view_order_search" model="ir.ui.view">
+            <field name="name">sale_order_search</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_sales_order_filter"/>
+            <field name="arch" type="xml">
+	
+		<group expand="0" string="Group By...">
+		<filter string="fecha de hoy" name="dia" icon="terp-day" domain="[('date_order','=',(context_today().strftime('%%Y-%%m-%%d')))]" context="{'group_by':'date_order'}"/>
+		</group>
+		
+            </field>
+        </record>
+
+    </data>
+</openerp>

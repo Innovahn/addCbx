@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+
+	<data>
+	
+	<record model="ir.ui.view" id="socios_tree_view">
+          <field name="name">socios.tree</field>
+            <field name="model">cybex.socios</field>
+            <field name="arch" type="xml">
+           <tree string="Categorias" editable="bottom">
+              <field name="partner_id" />
+              <field name="contrato_membresia_id" />
+            </tree>
+          </field>
+        </record>
+	
+	
+	
+	<record model="ir.ui.view" id="socios_form_view">
+            <field name="name">socios.form</field>
+            <field name="model">cybex.socios</field>
+            <field name="arch" type="xml">
+                <form string="socios con contratos" version="7.0">
+                    <sheet>
+                     	 <h1>Formulario de Contrato</h1>
+                       <group>
+                       <field name="partner_id" string="socios"/>
+                       <filed name="contrato_membresia_id" string="contratos"/>
+                       </group>
+                       
+                       
+                       
+                    </sheet>
+                 </form>
+            </field>
+</record>
+
+
+
+	
+	<record model="ir.actions.act_window" id="socios_action">
+	<field name="name">socios</field>
+	<field name="res_model">cybex.socios</field>
+	<field name="view_mode">tree,form</field>
+	<field name="help" type="html">
+	
+	
+	</field>
+	</record>
+	
+		
+
+    <menuitem id="contrato asociado" name="socios" parent="main_menu_gestionar" action="socios_action" />
+	
+	
+	
+	</data>
+</openerp>

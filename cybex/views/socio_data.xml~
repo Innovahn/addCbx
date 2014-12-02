@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<openerp>
+	<data noupdate="1">
+	
+		<!-- Sequence type for Socio -->
+		<record model="ir.sequence.type" id="seq_type_socio">
+			<field name="name">secuencia de socio</field>
+			<field name="code">serial_socio</field>
+		</record>
+
+		<!--Sequence for Socio -->
+		<record model="ir.sequence" id="seq_socio">
+			<field name="name">secuencia de Socios</field>
+			<field name="code">serial_socio</field>
+			<field name="number_next_actual" eval="50000"/>
+		</record>
+
+
+	</data>
+</openerp>

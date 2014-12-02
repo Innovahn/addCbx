@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+        
+        <record id="view_account_invoice_form" model="ir.ui.view">
+            <field name="name">account_invoice_inherit</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="account.invoice_form"/>
+            <field name="arch" type="xml">
+		<field name="partner_id" position="before">
+		
+		<field name="nombre_cliente"/>
+		<field name="linea_pedido"/>
+		</field>
+
+		
+            </field>
+        </record>
+
+        <record id="view_account_invoice_filter" model="ir.ui.view">
+            <field name="name">account_factura_filter</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="account.view_account_invoice_filter"/>
+            <field name="arch" type="xml">
+	   
+		<search>
+		<field name="nombre_cliente" filter_domain="[('nombre_cliente','=',self)]"/>
+		 </search>
+		<group expand="0" string="Group By...">
+		<filter string="fecha de hoy" name="dia" icon="terp-day" domain="[('date_invoice','=',(context_today().strftime('%%Y-%%m-%%d')))]" context="{'group_by':'date_invoice'}"/>
+		</group>
+		
+            </field>
+        </record>
+
+
+	<record id="view_account_invoice_tree" model="ir.ui.view">
+            <field name="name">account_invoice_tree</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="account.invoice_tree"/>
+            <field name="arch" type="xml">
+		<field name="partner_id" position="before">
+		
+		<field name="nombre_cliente"/>
+		
+		</field>
+
+		
+            </field>
+        </record>
+
+	
+
+
+
+    </data>
+</openerp>

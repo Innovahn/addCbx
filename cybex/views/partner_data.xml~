@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<openerp>
+	<data >
+	
+		<!-- Sequence type for agreement -->
+		<record model="ir.sequence.type" id="seq_type_partner">
+			<field name="name">codigo socio serial</field>
+			<field name="code">serial_codigo</field>
+		</record>
+
+		<!--Sequence for agreement -->
+		<record model="ir.sequence" id="seq_partner">
+			<field name="name">codigo socio serial</field>
+			<field name="code">serial_codigo</field>
+			<field name="padding" eval="9"/>
+	
+			<field name="number_next_actual" eval="50000"/>
+		</record>
+
+		
+	</data>
+</openerp>

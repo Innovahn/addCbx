@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+
+	<data>
+	
+	
+
+          <!-- Creo la vista Tree para El Contrato -->
+
+        <record model="ir.ui.view" id="categoria_tree_view">
+          <field name="name">categoria.tree</field>
+            <field name="model">cybex.categoria</field>
+            <field name="arch" type="xml">
+           <tree string="Categorias" editable="bottom">
+              <field name="name" />
+              <field name="codigo" />
+            </tree>
+          </field>
+        </record>
+
+
+
+
+	
+	<record model="ir.actions.act_window" id="categoria_action">
+	<field name="name">categoria</field>
+	<field name="res_model">cybex.categoria</field>
+	<field name="view_mode">tree</field>
+	<field name="help" type="html">
+	
+	
+	</field>
+	</record>
+	
+		
+
+    <menuitem id="menu_categoria" name="Categorias" parent="main_menu_gestionar" action="categoria_action" sequence="3"/>
+	
+	
+	
+	</data>
+</openerp>

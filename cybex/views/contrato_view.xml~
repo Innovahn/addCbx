@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+
+	<data>
+	
+	<!--crear vista busqueda-->
+        
+     <record model="ir.ui.view" id="contrato_search_view">
+<field name="name">contrato.search</field>
+<field name="model">cybex.contrato_membresia</field>
+<field name="arch" type="xml">
+<search string="Busqueda de Contrato">
+
+<filter string="Socios" icon="terp-partner"
+name="socios"
+domain="[('socios_ids','=',uid)]"
+help="Socios facturados por el usuario " />
+
+<filter string="Contratos que vencen en el mes" name="type_fpm" domain="[('fecha_fin','&lt;',((context_today()+relativedelta(day=1,months=1)).strftime('%%Y-%%m-%%d '))),('fecha_fin','&gt;=',time.strftime('%%Y-%%m-1'))]"/>
+
+
+
+
+<field name="socios_ids"/>
+<field name="name"/>
+
+
+</search>
+</field>
+</record>
+	
+	
+	<!-- Creo la vista Form para El Contrato -->
+	
+	<record model="ir.ui.view" id="contract_form_view">
+            <field name="name">contract.form</field>
+            <field name="model">cybex.contrato_membresia</field>
+            <field name="arch" type="xml">
+                <form string="Formulario de Contrato" version="7.0">
+                
+                <header>
+                    <button name="action_draft" type="object" string="inactivo"
+                            state="inactivo" />
+               
+                    <button name="action_done" type="object" string="pagado"
+                            state="pagado"/>
+                <field name="state" widget="statusbar" nolabel="1" statusbar_visible="inactivo,pagado" />
+              </header>
+                
+                
+                
+                    <sheet>
+                    <h1>Formulario de Contrato</h1>
+                    <group>
+                    <group>
+                    <field name="name" required="1"/>
+                    <field name="fecha_inicio"/>
+                    <field name="fecha_fin"/>
+		    		<field name="tipo_membresiaids"/>
+                    <field name="valor_inscripcion"/>
+                    
+                    </group>
+                    <group>
+
+                    <field name="usuario_id"/>
+                    <field name="socios_ids" widget="one2many">
+                    <tree editable="top">
+                    <field name="partner_id" string="Socios"/>
+                    </tree>
+                    </field>
+                    </group>
+                    </group>
+                    <notebook>
+                    <page string="Observaciones">
+                    <field name="observaciones"/>
+
+                    </page>
+                    </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+          <!-- Creo la vista Tree para El Contrato -->
+
+        <record model="ir.ui.view" id="session_tree_view">
+          <field name="name">contract.tree</field>
+            <field name="model">cybex.contrato_membresia</field>
+            <field name="arch" type="xml">
+           <tree string="Contratos">
+              <field name="name" />
+              <field name="fecha_inicio" />
+              <field name="fecha_fin"/>
+              <field name="tipo_membresiaids" />
+               <field name="usuario_id" />
+            </tree>
+          </field>
+        </record>
+
+ 
+
+
+
+	
+	<record model="ir.actions.act_window" id="contract_action">
+	<field name="name">Contrato</field>
+	<field name="res_model">cybex.contrato_membresia</field>
+	<field name="view_mode">tree,form</field>
+	<field name="context">{'default_type':'type_fpm'}</field>
+	
+	<field name="help" type="html">
+	
+	</field>
+	
+	</record>
+	
+		
+	<menuitem id="contrato_id" name="Contratos" parent="main_menu_membresias" sequence="2"/>
+	<menuitem name="Creacion de Contratos y Facturacion Recurrente" id="menu_recurring_orders_agreements" 
+            parent="contrato_id" action="action_sale_recurring_orders_agreement" 
+            sequence="4"/>
+	
+	
+	</data>
+</openerp>

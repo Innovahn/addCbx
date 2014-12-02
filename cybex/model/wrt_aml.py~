@@ -1,0 +1,21 @@
+# -*- coding: utf-8 -*-
+from openerp.osv import fields, osv
+from datetime import datetime
+class ac_mv_ln(osv.Model):
+
+
+
+	_inherit = 'account.move.line'
+
+	
+
+
+
+
+	_columns = {
+        		
+		'account_m_l':fields.many2one('account.voucher',"relation account voucher"),
+
+            }
+	
+     

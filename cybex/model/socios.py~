@@ -1,0 +1,21 @@
+# -*- coding: utf-8 -*-
+from openerp.osv import osv, fields
+
+class socios(osv.Model):
+
+	_name = "cybex.socios"
+	_rec_name = 'partner_id'
+
+	_columns = {
+
+                    'partner_id': fields.many2one('res.partner', "Partner", required=True, ondelete='cascade'),
+                
+
+    }
+
+
+	_sql_constraints = [('partner_contrato_unique','UNIQUE(partner_id, contrato_membresia_id)','No Se puede insertar el mismo Socio multiples veces'),]
+	
+	
+
+

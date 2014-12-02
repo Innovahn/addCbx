@@ -1,0 +1,105 @@
+<?xml version="1.0"?>
+
+<openerp>
+
+    <data>
+
+<!--creo la vista de formulario -->
+
+<record model="ir.ui.view" id="tipo_membresia_form">
+            <field name="name">tipo_membresia.form</field>
+            <field name="model">product.product</field>
+            <field name="arch" type="xml">
+                   
+                <form string="tipos de productos" version="7.0">
+                    <sheet>
+                  
+                        <label for="name" string="Nombre de membresia" class="oe_edit_only"/>
+                        <h1>
+                             <field name="name" position = "attributes">
+            					<attribute name=  "string">Nombre de Membresia</attribute>
+       						 </field>
+                        </h1>
+                        <group>
+                            <group>
+                                <field name="tipo"/>
+                                       <field name="active"/>
+                                      
+                            </group>
+                            <group>
+                                <field name="categ_id" invisible="1"/>
+                              
+							 <field name="default_code" string="Codigo"/>
+							 <field name='list_price' string="Precio"/>  
+							
+                            </group>
+                        </group>
+                        <label for="description"/>
+                        <field colspan="4" name="description" placeholder="Añadir una Descripcion..."/>
+                        <label for="description_sale"/>
+                        <field colspan="4" name="description_sale" placeholder="Añadir descripcion de venta..."/>
+                    </sheet>
+                 </form>
+            </field>
+</record>
+
+<!-- creo vista de arbol-->
+
+<record model="ir.ui.view" id="tipo_membresia_tree">
+            <field name="name">tipo_membresia.tree</field>
+            <field name="model">product.product</field>
+            <field name="arch" type="xml">
+                <tree string="tipo de membresia">
+                    <field name="code" string="Codigo"/>
+                    <field name="name"/>
+                    <field name="tipo"/>
+                    <field name='list_price' string="Precio"/>
+                    
+            </tree>
+            </field>
+        </record>
+
+
+
+ <record model="ir.actions.act_window" id="action_membership_products">
+            <field name="name">Tipos de Membresia</field>
+            <field name="res_model">product.product</field>
+             <field name="domain">[('membership','=',True), ('type', '=', 'service')]</field>
+            <field name="context">{'membership':True, 'type':'service', 'default_membership': True, 'default_type': 'service'}</field>
+            
+        </record>
+
+
+
+
+
+ <record model="ir.actions.act_window.view" id="action_membership_product_view_tree">
+            <field name="sequence" eval="1"/>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="tipo_membresia_tree"/>
+            <field name="act_window_id" ref="action_membership_products"/>
+        </record>
+
+ <record model="ir.actions.act_window.view" id="action_membership_product_view_form">
+            <field name="sequence" eval="2"/>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="tipo_membresia_form"/>
+            <field name="act_window_id" ref="action_membership_products"/>
+        </record>
+
+
+
+
+<menuitem name="Membresias" id="main_menu_membresias" />
+
+
+<menuitem name="Configuracion" id="main_menu_gestionar" parent="main_menu_membresias"/>
+    <menuitem name="Tipos de Membresias"
+                  parent="main_menu_gestionar"
+                  id="menu_membership_products"
+                  action="action_membership_products"
+                  sequence="4"/>
+                  
+	              
+    </data>
+</openerp>

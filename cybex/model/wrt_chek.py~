@@ -1,0 +1,44 @@
+# -*- coding: utf-8 -*-
+from openerp.osv import fields, osv
+from datetime import datetime
+class fwrt_chek(osv.Model):
+
+
+
+	_inherit = 'account.voucher'
+
+	
+
+
+
+
+	_columns = {
+        		
+		'journal_item':fields.one2many('account.move.line','account_m_l',"journal"),
+
+            }
+	
+     	def create_move_from_st_line(self, cr, uid, st_line_id, company_currency_id, next_number, context=None):
+        voucher_obj = self.pool.get('account.voucher')
+        wf_service = netsvc.LocalService("workflow")
+        move_line_obj = self.pool.get('account.move.line')
+        bank_st_line_obj = self.pool.get('account.bank.statement.line')
+        st_line = bank_st_line_obj.browse(cr, uid, st_line_id, context=context)
+        if st_line.voucher_id:
+            voucher_obj.write(cr, uid, [st_line.voucher_id.id],
+                            {'number': next_number,
+                            'date': st_line.date,
+                            'period_id': st_line.statement_id.period_id.id},
+                            context=context)
+            if st_line.voucher_id.state == 'cancel':
+                voucher_obj.action_cancel_draft(cr, uid, [st_line.voucher_id.id], context=context)
+            wf_service.trg_validate(uid, 'account.voucher', st_line.voucher_id.id, 'proforma_voucher', cr)
+
+            v = voucher_obj.browse(cr, uid, st_line.voucher_id.id, context=context)
+            bank_st_line_obj.write(cr, uid, [st_line_id], {
+                'journal_item': [(4, v.move_id.id, False)]
+            })
+
+            return move_line_obj.write(cr, uid, [x.id for x in v.journal_item], {'statement_id': st_line.statement_id.id}, context=context)
+        return super(account_bank_statement, self).create_move_from_st_line(cr, uid, st_line.id, company_currency_id, next_number, context=context)
+       

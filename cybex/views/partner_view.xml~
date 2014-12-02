@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<openerp>
+	<data>
+        <record model="ir.ui.view" id="partner_instructor_view">
+            <field name="name">partner.instructor</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="arch" type="xml">
+ 	 <page string="Accounting" position="attributes">
+                <attribute name='invisible'>1</attribute> 
+     </page>
+ 		<field name="name" required="1"/>	
+
+            
+          <field name="parent_id" position="before">
+          <label for="codigo_socio"/>
+          <field name="codigo_socio" />
+         </field> 
+                   
+      		<field name="is_company" position="attributes">
+      		<attribute name="label">Es Titular?</attribute>
+      		</field>
+            
+          <field name="function" position="replace">  
+            
+ 			 		<field name="identidad" required="1"/>
+ 			
+ 		</field>	
+ 		
+ 		   <field name="phone" position = "attributes">
+            <attribute name=  "placeholder"></attribute>
+        </field>
+             
+ 			 	
+			<field name="fax" position="replace"/>
+               <field name="fax" invisible="1"/>
+            <field name="title" position="replace"/>
+               <field name="title" invisible="1"/>
+          
+          	<field name="mobile" position="replace">
+               <field name="mobile" />
+                  
+  			</field>
+       
+              
+  			  <field name="email" position="replace" >
+               	<field name="email" required="1"/> 
+              </field>
+               
+  			
+  			           
+               <field name="category_id" position="replace"/>
+               <field name="category_id" invisible="1"/>
+               
+                                
+                <field name="website" position="replace">
+                <field name="estado" on_change="onchange_active(estado)"/>
+		<field name="active_date"/>		
+		<field name="desactive_date" />
+		
+ 				 </field>
+ 				 
+ 				 
+ 			 				
+ 			    
+ 			    <notebook position="inside">
+ 				
+ 			    	
+					<page string="Datos Medicos Proporcionados">
+					<group>
+					
+             		<group>
+ 			 		<field name="edad"/>
+                    <field name="sexo"/>
+					<field name="estado_civil"/>
+                    <field name="fecha_nac"/>
+					</group>
+					
+					
+					 <group>
+ 			    	   <field name="alto_colesterol"/>
+                    	<field name="hipertension_arterial"/>
+                    	<field name="prob_coronarios"/>
+                    	<field name="diabetes"/>                         
+                    	<field name="asma"/>
+                    	
+                    </group>
+                    
+                    	<group>
+ 			   		<h2 colspan="4">En Caso de Emergencia </h2>
+ 			   			<field name="contacto"/>
+ 			   			<field name="emergencia"/>
+ 			   		</group>
+                    
+                     <group>	
+                        <field name="embarazo"/>
+                    	<field name="cirugias"/>
+                    	<field name="sobre_peso"/>
+                    	<field name="fuma"/>
+                        <field name="bebidas_alc"/>	
+ 			   		</group>
+ 			   		
+                  </group>
+                    </page>
+                    <page string="Contrato Asociado">
+                    
+                    <field name="contrato" readonly="True"/>
+                    
+                    
+                    </page>
+		   </notebook>
+            </field>
+
+        </record>
+	
+	
+
+
+
+	<record id="view_res_partner_filter" model="ir.ui.view">
+            <field name="name">res.partner.select</field>
+            <field name="model">res.partner</field>
+	    <field name="type">search</field>
+	    <field name="inherit_id" ref="base.view_res_partner_filter"/>
+            <field name="arch" type="xml">
+		
+			<xpath expr="//field[@name='name']" position="after">
+
+  				<field name="codigo_socio" filter_domain="[('codigo_socio','=',self)]"/>
+				
+
+			</xpath>
+       			
+			
+			
+             
+            </field>
+        </record>
+
+
+	<record id="view_res_partner_tree" model="ir.ui.view">
+            <field name="name">res.partner.tree</field>
+            <field name="model">res.partner</field>
+	    <field name="type">tree</field>
+	    <field name="inherit_id" ref="base.view_partner_tree"/>
+            <field name="arch" type="xml">
+		
+		<field name="name" position="before">
+
+		<field name="codigo"/>
+	
+		</field>
+		
+       			
+			
+			
+             
+            </field>
+        </record>
+
+
+
+
+
+
+
+<record model="ir.actions.act_window" id="contact_list_action">
+<field name="name">Contacts</field>
+<field name="res_model">res.partner</field>
+<field name="view_type">form</field>
+<field name="view_mode">kanban,tree,form</field>
+<field name="search_view_id" ref="view_res_partner_filter"/>
+</record>
+<menuitem id="partner_socio" name="Clientes"
+parent="main_menu_membresias" sequence="1"/>
+<menuitem id="menu_socios" name="Clientes" parent="partner_socio" action="contact_list_action" />
+
+
+
+	</data>
+</openerp>
